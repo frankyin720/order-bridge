@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans classpath:xmlschema/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context classpath:xmlschema/spring-context-4.2.xsd
+       http://www.springframework.org/schema/util classpath:xmlschema/spring-util-4.2.xsd
+       http://www.springframework.org/schema/tool classpath:xmlschema/spring-tool-4.2.xsd
+       http://www.springframework.org/schema/tx classpath:xmlschema/spring-tx-4.2.xsd">
+
+	<context:component-scan base-package="com.rw.orderbridge.dao" />
+	<context:component-scan base-package="com.rw.orderbridge.controller" />
+	<context:component-scan base-package="com.rw.orderbridge.resource" />
+	<context:component-scan base-package="com.rw.orderbridge.context" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url"
+			value="jdbc:sqlserver://localhost:3341;databaseName=ORDER_BRIDGE" />
+		<property name="username" value="${datasource.username}" />
+		<property name="password" value="${datasource.password}" />
+	</bean>
+
+	<bean id="placeholder"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:orderbridge.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<value>com.rw.orderbridge.model
+			</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.jdbc.batch_size">100</prop>
+				<prop key="hibernate.connection.isolation">1</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- DataSource Transaction Manager Definition -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Controllers -->
+	<bean id="customerOrderController" class="com.rw.orderbridge.controller.CustomerOrderController"></bean>
+	<bean id="customerController" class="com.rw.orderbridge.controller.CustomerController"></bean>
+
+	<!-- DAOs -->
+	<bean id="customerOrderDao" class="com.rw.orderbridge.dao.GenericDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<constructor-arg>
+			<value>com.rw.orderbridge.model.CustomerOrder</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="customerDao" class="com.rw.orderbridge.dao.GenericDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<constructor-arg>
+			<value>com.rw.orderbridge.model.Customer</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- Utility -->
+	<bean id="jsonValidator" class="com.rw.orderbridge.util.JSONValidator" />
+
+	<!-- JSON Schema -->
+	<bean id="addCustomerRequestSchema" class="java.lang.String">
+		<constructor-arg>
+			<bean class="org.springframework.util.FileCopyUtils"
+				factory-method="copyToByteArray">
+				<constructor-arg
+					value="classpath:jsonschema/AddCustomerRequest.schema.json" type="java.io.InputStream" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="addCustomerOrderRequestSchema" class="java.lang.String">
+		<constructor-arg>
+			<bean class="org.springframework.util.FileCopyUtils"
+				factory-method="copyToByteArray">
+				<constructor-arg
+					value="classpath:jsonschema/AddCustomerOrderRequest.schema.json" type="java.io.InputStream" />
+			</bean>
+		</constructor-arg>
+	</bean>
+</beans>

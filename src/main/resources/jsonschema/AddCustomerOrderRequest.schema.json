@@ -1,0 +1,46 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "",
+	"description": "",
+	"type": "object",
+	"properties": {
+		"customerKey":  {
+			"description": "Customer key",
+			"type": "string"
+		},
+		"dimensionWidthFeet":  {
+			"description": "Dimension Width Feet",
+			"type": "integer"
+		},
+		"dimensionWidthInch":  {
+			"description": "Dimension Width Inch",
+			"type": "integer"
+		},
+		"dimensionHeightFeet":  {
+			"description": "Dimension Height Feet",
+			"type": "integer"
+		},
+		"dimensionHeightInch":  {
+			"description": "Dimension Height Inch",
+			"type": "integer"
+		},
+		"style":  {
+			"description": "Style",
+			"type": "string"
+		},
+		"faceOption":  {
+			"description": "Face Option",
+			"type": "string"
+		}
+	},
+	"required": [
+		"customerKey",
+		"dimensionWidthFeet",
+		"dimensionHeightFeet",
+		"style",
+		"faceOption"
+	]
+	
+	
+	
+}

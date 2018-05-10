@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.rw</groupId>
+	<artifactId>order-bridge</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Order Bridge</name>
+
+	<organization>
+		<name>Richards-Wilcox</name>
+	</organization>
+	<description>
+        Order bridge application
+    </description>
+	<url>https://www.rwdoors.com/</url>
+
+	<properties>
+		<version.springframework>4.1.9.RELEASE</version.springframework>
+		<version.hibernate>4.3.6.Final</version.hibernate>
+		<version.jersey>2.6</version.jersey>
+		<version.jackson>2.9.0</version.jackson>
+		<version.gson>2.3</version.gson>
+		<version.fge.jackson>1.8</version.fge.jackson>
+		<version.fge.schema.core>1.2.5</version.fge.schema.core>
+		<version.fge.schema.validator>2.2.6</version.fge.schema.validator>
+		<version.sqlserver>4.0</version.sqlserver>
+		<version.commons.lang3>3.7</version.commons.lang3>
+		<version.commons.collections4>4.1</version.commons.collections4>
+		<version.joda>2.9.7</version.joda>
+		<version.genson>0.99</version.genson>
+		<version.junit>4.8.2</version.junit>
+		<version.mockito>1.9.5</version.mockito>
+		<version.slf4j>1.7.7</version.slf4j>
+		<version.plugin.compiler>3.7.0</version.plugin.compiler>
+		<version.plugin.compiler.source>1.8</version.plugin.compiler.source>
+		<version.plugin.compiler.target>1.8</version.plugin.compiler.target>
+		<version.plugin.dependency>3.0.2</version.plugin.dependency>
+		<version.plugin.jsonschema2pojo>0.4.30</version.plugin.jsonschema2pojo>
+		<version.plugin.eclipse>2.9</version.plugin.eclipse>
+		<version.plugin.eclipse.wtp>2.0</version.plugin.eclipse.wtp>
+	</properties>
+
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${version.hibernate}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${version.hibernate}</version>
+		</dependency>
+
+		<!-- Jersey -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${version.jersey}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish.hk2</groupId>
+					<artifactId>osgi-resource-locator</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>aopalliance</groupId>
+					<artifactId>aopalliance</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${version.jersey}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${version.jersey}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+			<version>${version.jersey}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jersey-server</artifactId>
+					<groupId>org.glassfish.jersey.core</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>
+                        jersey-container-servlet-core
+                    </artifactId>
+					<groupId>org.glassfish.jersey.containers</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hk2</artifactId>
+					<groupId>org.glassfish.hk2</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>aopalliance</groupId>
+					<artifactId>aopalliance</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${version.jackson}</version>
+		</dependency>
+
+		<!-- GSON -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${version.gson}</version>
+		</dependency>
+
+		<!-- FGE -->
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>jackson-coreutils</artifactId>
+			<version>${version.fge.jackson}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-schema-core</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mozilla</groupId>
+					<artifactId>rhino</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>${version.fge.schema.core}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>${version.fge.schema.validator}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.owlike</groupId>
+			<artifactId>genson</artifactId>
+			<version>${version.genson}</version>
+		</dependency>
+
+		<!-- SqlServer -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>${version.sqlserver}</version>
+		</dependency>
+
+		<!-- Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${version.commons.lang3}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${version.commons.collections4}</version>
+		</dependency>
+
+		<!-- JODA -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${version.joda}</version>
+		</dependency>
+
+		<!-- Unit Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${version.mockito}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Logs -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.plugin.compiler}</version>
+				<configuration>
+					<source>${version.plugin.compiler.source}</source>
+					<target>${version.plugin.compiler.target}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${version.plugin.dependency}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>sources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jsonschema2pojo</groupId>
+				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+				<version>${version.plugin.jsonschema2pojo}</version>
+				<executions>
+					<execution>
+						<id>orderbridge</id>
+						<configuration>
+							<useCommonsLang3>true</useCommonsLang3>
+							<sourceDirectory>${project.basedir}/src/main/resources/jsonschema</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+							<targetPackage>com.rw.orderbridge.jsonschema</targetPackage>
+						</configuration>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>${version.plugin.eclipse}</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+					<wtpversion>${version.plugin.eclipse.wtp}</wtpversion>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

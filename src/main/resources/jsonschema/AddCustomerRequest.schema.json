@@ -1,0 +1,20 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "",
+	"description": "",
+	"type": "object",
+	"properties": {
+		"customerName": {
+			"description": "Customer name",
+			"type": "string"
+		},
+		"customerKey":  {
+			"description": "Customer key",
+			"type": "string"
+		}		
+	},
+	"required": [
+		"customerName",
+		"customerKey"
+	]
+}
